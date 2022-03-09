@@ -1,4 +1,4 @@
-function prmCreate( radius , box , nbConfigs , kNeighbors , subdivRate )
+function prmCreate( radius , nbConfigs , kNeighbors , subdivRate )
 
 % Create configuration graph for a PRM planner for disks moving in a
 % rectangle of the 2D plane.
@@ -18,12 +18,20 @@ function prmCreate( radius , box , nbConfigs , kNeighbors , subdivRate )
 %   - the adjacency graph, graph.
 
 % Discretization step when checking for collisions along a segment: 
+
+
+global angle_stop box obstacles a l1 l2 v_max theta_max;
+
 step = max( (box(2)-box(1)) , (box(4)-box(3)) ) / subdivRate ;
+angle_stop = [-pi;
+              pi;
+              -pi;
+              pi];
 
 % Number of neighbors for graph connectivity
 
 tic ;
-qSet = generateFreeConfigurations( nbConfigs , box , radius ) ;
+qSet = generateFreeConfigurations( nbConfigs , box ) ;
 toc ;
 tic ;
 graph = createConfigurationGraph( qSet , kNeighbors , box , radius ) ;

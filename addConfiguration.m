@@ -15,15 +15,15 @@
 %             least one other node of the graph.
 % - qSet, graph: Modified graph after addition.
 %
-function [wasAdded,qSet,graph] = addConfiguration( q , qSet , graph , ...
-                                     kNeighbors , delta , radius ) 
+function [wasAdded,qSet,graph] = addConfiguration( q , qSet , graph , kNeighbors) 
 
+                                 
 nearest = knnsearch(qSet,q,'K',kNeighbors,'NSMethod','exhaustive') ;
 nbNodes = size(graph,1) ;
-wasAdded = false ;  % Until proved otherwise.
+wasAdded = false ;  % Until proven otherwise.
 for i = 1 : kNeighbors
-    if collisionFreeSegment( q , qSet(nearest(i),:) , delta , radius )
-        graph(nbNodes+1,nearest(i)) = norm( q-qSet(nearest(i),:) ) ;
+    if collisionFreeSegment( q , qSet(nearest(i),:))
+        graph(nbNodes+1,nearest(i)) = costFunction( q-qSet(nearest(i),:) ) ;
         graph(nearest(i),nbNodes+1) = graph(nbNodes+1,nearest(i)) ;
         qSet(nbNodes+1,:) = q ;
         wasAdded = true ;

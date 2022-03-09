@@ -1,5 +1,5 @@
 function graph = ...
-    createConfigurationGraph(qSet,k,radius,stepInPlane)
+    createConfigurationGraph(qSet,k)
 
 % Create a configuration graph with a set of free configurations of disks
 % in the plane.
@@ -24,6 +24,8 @@ function graph = ...
 %
 % Author: Gaetan Garcia - Ecole Centrale de Nantes - March 2016.
 
+global angle_stop box obstacles a l1 l2 v_max theta_max;
+
 graph = sparse( size(qSet,1) ) ;
 
 % Progress bars seem to take up quite a bit of resources, so they were
@@ -38,7 +40,7 @@ graph = sparse( size(qSet,1) ) ;
 % par:
 % nearest = nearest( (nearest > i) ) ;
 
-
+graph = zeros(size(qSet,1)); %allocating memory
 
 for i = 1 : size(qSet,1) 
     % Low tech progress indicator
@@ -52,9 +54,11 @@ for i = 1 : size(qSet,1)
     % Eliminate the node itself.
     nearest = nearest( (nearest ~= i) ) ;
     for j = 1 : length(nearest) 
-        if collisionFreeSegment( qSet(i,:),qSet(nearest(j),:),stepInPlane,radius )
-            graph(i,nearest(j)) = costFunction( qSet(i,:) , qSet(nearest(j),:) ) ;
-            graph(nearest(j),i) = graph(i,nearest(j)) ;
+        if graph(i,nearest(j)) == 0
+            if collisionFreeSegment( qSet(i,:),qSet(nearest(j),:))
+                graph(i,nearest(j)) = costFunction( qSet(i,:) , qSet(nearest(j),:) ) ;
+                graph(nearest(j),i) = graph(i,nearest(j)) ;
+            end
         end
     end
 end
