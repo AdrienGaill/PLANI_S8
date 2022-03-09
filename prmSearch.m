@@ -2,6 +2,8 @@
 
 % Step 1: User selects a pre-calculated PRM in which to search.
 
+global angle_stop box obstacles a l1 l2 v_max theta_max;
+
 dataFile = uigetfile('graphs/*.mat','Select data file') ;
 eval(['load graphs/' , dataFile]) ; 
 

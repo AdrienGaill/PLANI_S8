@@ -2,7 +2,7 @@ function distance = costFunction(Q1,Q2)
 %COSTFUNCTION Summary of this function goes here
 %   Detailed explanation goes here
 
-global v_max theta_max;
+global angle_stop box obstacles a l1 l2 v_max theta_max;
 
 Q1_tuned = [Q1(1)/v_max; 
             Q1(2)/v_max;
