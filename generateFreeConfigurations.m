@@ -5,7 +5,7 @@ function qFree = generateFreeConfigurations( nbConfig , box , radius )
 %
 % Inputs:
 %   - nbConfig, number of collisions free configurations to generate.
-%   - box(1:4), defines the bounding box in which the CENTERS of the disks
+%   - box(1:4), defines the bounding box in which the centers of the disks
 %               must fit (order: xmin, xmax, ymin, ymax).
 %   - radius,   vector of the disk radii. The length of the vector is the
 %               number of disks.

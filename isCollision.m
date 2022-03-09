@@ -1,17 +1,15 @@
-function collision = isCollision( q , radius ) 
-
-% Check if any two disks of the configuration interfere. The number of
-% disks is length(radius), so q has 2*length(radius) elements.
-% If the distance between disk i and disk j (j>i) is lower than the sum
-% of the radii of the disks, then a collision occurs. As soon as one
-% (i,j) collision pair is found, stop calculations.
+function collision = isCollision( obj1 , obj2 ) 
     
-    collision = false ;
-    for i = 1 : length(radius)-1
-        for j = i+1 : length(radius)
-            collision = ...
-                norm( [q(2*i-1) q(2*i)] - [q(2*j-1) q(2*j)] ) < ...
-                radius(i)+radius(j) ;
+% obj1 and obj2 are matrixes composed of segments
+
+N1 = size(obj1)(1);
+N2 = size(obj2)(1);
+collision = false ;
+intersectMat = lineSegmentIntersect(obj1, obj2).intAdjacencyMatrix
+
+    for i = 1 : N1
+        for j = i+1 : N2
+            collision = (intersectMat(i, j) == 1);
             if collision
                 return ;
             end
